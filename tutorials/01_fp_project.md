@@ -160,7 +160,7 @@ Prelude> (+) 5 4
 9
 ```
 
-On the other hand you might want to use some functions in infix and you need `\`` for that.
+On the other hand you might want to use some functions in infix and you need `` ` `` for that.
 
 ```
 Prelude> :t div
