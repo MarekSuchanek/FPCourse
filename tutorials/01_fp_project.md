@@ -2,6 +2,14 @@
 
 ## Functional programming concepts
 
+*TODO*
+
+### Lambda calculus
+
+### Function as first class object
+
+### FP dictionary
+
 ## Haskell - the programming language
 
 [Haskell] is pure functional programming language with strong static typing and non-strict evaluation. It is also standardized (actual standard is [Haskell 2010] and 2020 is under development). Although it is language with academic and strong math background, it is being used in [research][haskell_research], [education][haskell_education] as well as in [industry][haskell_industry] for various projects. It was created as one common language based on many previous functional languages during 1990s. Main language implementation is [Glasgow Haskell Compiler (GHC)][GHC], which we will use intesively in this course.
@@ -482,9 +490,11 @@ greet :: String -> String
 
 ## Task assignment
 
+*TODO*
+
 ## Further reading
 
-
+*TODO*
 
 
 [Cabal]: https://www.haskell.org/cabal/
