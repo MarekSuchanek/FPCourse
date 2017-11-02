@@ -19,7 +19,25 @@ There are some [reserved keywords/operators] which have some special meaning in 
 
 ### Type declaration
 
+```haskell
+data TypeConstr typeparams = DataConstr params
+```
+
+
 ## Data types
+
+Haskell has strong static type system which is one of the things making it so great. As we already saw, every expression in Haskell has some type and the type cannot change during runtime (that is the difference with dynamic typing). As in other programming languages can use predefined data types, get more from some libraries or introduce your own.
+
+### Basic Data Types
+
+* `Int` = A fixed-precision integer type with at least the range `[-2^29 .. 2^29-1]` (exact range can vary based on implementation, it can be check with `minBound` and `maxBound`)
+* `Integer` = Arbitrary-precision integers (e.g. theoretically unlimited)
+* `Float` = Single-precision floating point numbers
+* `Double` = Double-precision floating point numbers
+* `Word` = Unsigned integral number (same size as `Int`)
+* `Char` = Unicode character (ISO/IEC 10646)
+* `Bool` = truth value, only `True` or `False`
+* `String` = literally list of characters
 
 ### Type and data constructor
 
