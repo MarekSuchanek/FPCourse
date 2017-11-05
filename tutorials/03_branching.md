@@ -122,21 +122,113 @@ myMax a b
 
 ## Let in, where
 
+You can define an expression (function or constant) at module (file) level but then it can be used everywhere in that module/file. If you want to structure your code well and define some local expressions you have two basic ways how to do it - with `let-in` or `where` keywords.
+
 ### Let in
+
+Firstly, `let ... in ...` is an expression an can be written in any place you can write expressions. After `let` you can define expressions (called bindings) you will then use in following one (the one after `in`).
+
+```haskell
+
+```
 
 ### Where
 
+In contrast to `let-in`, `where` is bound to a surrounding syntactic construct, like the pattern matching line of a function definition and thus cannot be used everywhere as expression. You can understand it little as `let-in` but vice versa (first expression and then bindings of used expressions in it).
+
+```haskell
+
+```
+
+You can also create nested `where`:
+
+```haskell
+
+```
+
 ### Where with guards
+
+Typical and pretty use is with guards:
+
+```haskell
+
+```
 
 ## Modules and imports
 
+A Haskell program consists of a collection of modules (similar to other programming language). In the top level you can declare and define data types, function, typeclasses and their instances, pattern bindings and so on.
+
 ### Module specification
+
+Every file forms a module, if there is no specification of module name, `Main` is used by default as we saw. Module name must start with capital letter and then it is alphanumeric string. Although there is no formal connection between filesystem and modules, if you use GHC (and we do) you should name your canonical module name should reflect FS. For example module `FPCourse.Lesson3.TestModule` would be places in file `FPCourse/Lesson3/TestModule.hs` with content:
+
+```haskell
+module FPCourse.Lesson3.TestModule (
+    myFunc1, myFunc3
+) where
+
+myFunc1 x = myFun2 7 x
+
+myFunc2 x y = x - y
+
+myFunc3 x y z = x * y + z
+```
+
+Notice that after module name there is an optional list of stuff which can be imported from this module. In this case you can import `myFunc1` and `myFunc3` but not `myFunc2`.
 
 ### Import something
 
+How to import something from different module? As in other languages use `import` keyword:
+
+```haskell
+import FPCourse.Lesson3.TestModule
+
+x = myFunc1 10
+y = FPCourse.Lesson3.TestModule.myFunc1 25
+```
+
+Plain import will allow you to use all exposed from module with unqualified and qualified (with module name) names.
+
+You can also specify what do you want to import explicitly:
+
+```haskell
+import FPCourse.Lesson3.TestModule ( myFunc1 )
+
+x = myFunc1 10
+y = FPCourse.Lesson3.TestModule.myFunc1 25
+```
+
 ### Qualified import
 
+If you want/need to import just with qualified names, you can use `qualified` keyword:
+
+```haskell
+import qualified FPCourse.Lesson3.TestModule ( myFunc1 )
+
+x = FPCourse.Lesson3.TestModule.myFunc1 10
+y = FPCourse.Lesson3.TestModule.myFunc1 25
+```
+
+If you need to import something with same name from different modules, you must use just the qualified names to distinguish it. As you can see writing qualified name can be bothersome but needed. Luckily you can introduce an alias for the module name with keyword `as`:
+
+```haskell
+import qualified FPCourse.Lesson3.TestModule as FPTM ( myFunc1 )
+
+x = FPTM.myFunc1 10
+y = FPTM.myFunc1 25
+```
+
 ### Hiding import
+
+Last thing you can do with import is to hide something.
+It can be useful if there are name clashes. If you want to import everything from module except one (or several) functions it is the right way to use keyword `hiding`:
+
+```haskell
+import FPCourse.Lesson3.TestModule hiding ( myFunc3 )
+
+x = FPTM.myFunc1 10
+y = FPTM.myFunc1 25
+```
 
 ## Task assignment
 
