@@ -111,13 +111,86 @@ Get back to creating own data types with the `data` keyword.
 
 ## List and tuple
 
+There are two basic container types (has ability to store multiple values) - tuples and lists. Of course there are many more such as maps, sets, vectors, streams defined in some libraries or you can create your own but these are real the basic and widely used.
+
 ### Tuple
+
+Tuple has a fixed number of elements of fixed types. You always know how many elements are in the tuple and what type is it. Type of elements in a tuple can differ.
+
+```haskell
+myTuple :: (Int, String, Bool, Double)
+myTuple = (15, "String", True, 5.24)
+
+myFunc :: (Int, String, Bool, Double) -> (Double, String)
+myFunc (a, b, c, d) = (if d then a + d else a - d, b)
+```
+
+There are basic functions for tuples with two elements: `fst`, `snd`, and `swap`.
+
+```
+
+```
+
+Good to know is how it actually works and try to implement own tuples.
+
+```haskell
+data MyTuple2 a b = XTuple2 a b
+data MyTuple3 a b c = XTuple3 a b c
+-- ...
+
+myTuple :: MyTuple3 Int String Double
+myTuple = XTuple3 7 "Hi" 2.25
+```
+
+What forms the tuple is the `,` operator keyword and used notation in first example is just a syntactic sugar.
+
+
+```haskell
+myTuple = (,) 7 "Hi"
+```
 
 ### List
 
+List is different than tuples - it has variable length (because it is recursive type) and its elements have the same type. To understand it, let's create an alternative implementation of list data type.
+
+```haskell
+data List a = Empty | NonEmpty a (List a)
+```
+
+That's it! List of type `a` it either `Empty` or `NonEmpty` which means that it has an element and then rest of the list (which can be again `Empty` or `NonEmpty`). Sometimes the following naming is used:
+
+```haskell
+data List a = Nil | Cons a (List a)
+```
+
+It is because with `Cons` you join element with the other list. List in Haskell is very similar, just for `Nil` you use empty list `[]` and for joining the infix cons operator `:`.
+
+```haskell
+myIntList :: [Int]
+myIntList = [5,8,7,1]
+myIntList = 5:8:7:[1]
+myIntList = 5:8:[7,1]
+-- ...
+-- infix cons
+myIntList = 5:8:7:6:1:[]
+-- prefix cons
+myIntList = (:) 5 ((:) 8 ((:) 7 ((:) 1 [])))
+```
+
+Actually `[5,8,7,6,1]` is a syntactic sugar for `5:8:7:6:1:[]` and even for the prefix. Same goes for the type, when you write `[Int]` it actually means `[] Int`. You can rewrite the actual list to:
+
+```haskell
+-- data [a] = [] | a:[a]
+data [] a = [] | (:) a ([] a)
+```
+
 ### String
 
+String is really nothing but just list of characters `[Char]`. Only difference is that there are more functions for working specially with `String`s - like `putStr`, `lines`, `words` and more.
+
 ## Simple functions
+
+Enough of types and containers, let's do some functions when this is functional programming course!
 
 ### Basic list functions
 
