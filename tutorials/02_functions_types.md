@@ -36,6 +36,19 @@ Haskell does not have implicit conversion and if you do something like it is in 
     In an equation for ‘b’: b = a
 ```
 
+### Type variable
+
+As you could have notice, we are able to achieve polymophism with something strange in function types, something called type variable. Type variables must start with lowercase letter and usually are just 1 character from the beginning of alphabet:
+
+```haskell
+identity :: a -> a
+identity x = x
+```
+
+Such type signature tells us that `identity` is a function from whatever type `a` to the same type `a`.
+
+### Type constraints
+
 In some cases (function type and others) you can see typeclass constraints like here:
 
 ```haskell
@@ -101,13 +114,99 @@ Haskell has strong static type system which is one of the things making it so gr
 * `Bool` = truth value, only `True` or `False`
 * `String` = literally list of characters
 
-### Type variable
-
 ### Type and data constructor
 
-Get back to creating own data types with the `data` keyword.
+Get back to creating own data types with the `data` keyword. After `data` is the type construction starting with capital letter and then there might be type parameters (type variables). Then `=` follows and after it we can specify multiple data constructors separated by `|`. Each data constructor again starts with capital letter and can be followed by data types which it takes as arguments.
+
+```haskell
+data MyType a b = MyTypeC1 a Int | MyTypeC2 String b | MyType3
+                deriving Show  -- will be covered later
+
+x :: MyType Bool Float
+x = MyTypeC1 True 10
+```
+
+Usually when there is just one data constructor, the name is the same as of the type constructor (but it is not a rule).
+
+### Record types
+
+Imagine you want to create a type for `Person` which contains `name`, `age`, `gender`, and `city`. You would need to do:
+
+```haskell
+data Gender = Male | Female
+            deriving Show
+
+data Person = Person String Int Gender String
+            deriving Show
+
+name :: Person -> String
+name (Person x _ _ _) = x
+
+age :: Person -> Int
+age (Person _ x _ _) = x
+
+gender :: Person -> Gender
+gender (Person _ _ x _) = x
+
+city :: Person -> String
+city (Person _ _ _ x) = x
+```
+
+Not very nice, right?! And we have just 4 attributes of a person. Luckily there is syntactic sugar which make it easier for us called record:
+
+```haskell
+data Gender = Male | Female
+            deriving Show
+
+data Person = Person
+            { name   :: String
+            , age    :: Int
+            , gender :: Gender
+            , city   :: String
+            } deriving Show
+```
+
+Now try to create a type `Pet` which also contains `name` and `age`. You will get an error which is logical, you cannot have two functions with the same name! One option is to rename it to `namePerson` and `namePet`, the second is available to you only if you have GHC 8.0.1 or higher and it is with language extension [DuplicateRecordFields](https://downloads.haskell.org/~ghc/master/users-guide/glasgow_exts.html#duplicate-record-fields):
+
+```haskell
+{-# LANGUAGE DuplicateRecordFields #-}
+
+data Gender = Male | Female
+            deriving Show
+
+data Person = Person
+            { name   :: String
+            , age    :: Int
+            , gender :: Gender
+            , city   :: String
+            } deriving Show
+
+data Pet = Pet
+         { name   :: String
+         , age    :: Int
+         } deriving Show
+
+olderPet :: Pet -> Pet
+olderPet pet = pet { age = (age pet + 1) }
+```
+
+You can also see that there is a shorthand for updating the value of record - creating new edited record from previous.
 
 ### Algebraic Data Types (ADTs)
+
+We say that our datatypes are algebraic in Haskell because it allows us to create sum and product types (with `data`), type aliases (with `type`), and special types (with `newtype`).
+
+* Sum = alternation with `|` (`A | B` -> A + B)
+
+```haskell
+data Number = I Int | D Double   -- Int + Double
+```
+
+* Product = combination of types (`A B` -> A * B)
+
+```haskell
+data Pair = P Int Double         -- Int * Double
+```
 
 ## List and tuple
 
@@ -201,3 +300,6 @@ Enough of types and containers, let's do some functions when this is functional 
 ## Task assignment
 
 ## Further reading
+
+* [Learn You a Haskell for Great Good](http://learnyouahaskell.com)
+* [School of Haskell](https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell)

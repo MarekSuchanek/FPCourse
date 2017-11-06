@@ -2,13 +2,32 @@
 
 ## Functional programming concepts
 
-*TODO*
+Functional programming is a programming paradigm (i.e. a style of building the structure and elements of computer programs) that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data. FP app is made of expressions or declarations instead of statements. Functional programming has its origins in lambda calculus, a formal system developed in the 1930s.
 
 ### Lambda calculus
 
-### Function as first class object
+Lambda calculus is good to understand (at least basics) when you want to start with FP. Actually it is not so complicated and quite straightforward.
 
-### FP dictionary
+* [Lambda calculus (wikipedia)](https://en.wikipedia.org/wiki/Lambda_calculus)
+
+### Function as first class-object
+
+Programming language is said to have [first-class functions](https://en.wikipedia.org/wiki/First-class_function) if it treats functions as first-class citizens or objects. It means that the language support following concepts:
+
+* passing function as argument,
+* returning function as result,
+* anonymous and nested functions,
+* closures (and non-local variables),
+* assigning functions to variables,
+* and equality of functions.
+
+### FP concepts and dictionary
+
+* **Pure function** = function without side effect, always return the same result for the same input
+* **Side effect** = modification of non-local state (global variable, input/output, raising exception, call function causing side effect, etc.)
+* **Immutable variables** = after setting (binding) name to expression, you can not modify it
+* **Referential transparency** = expression is said to be referentially transparent if it can be replaced with its corresponding value without changing the program's behavior
+* **Recursion** = recursion occurs when a thing is defined in terms of itself or of its type (applies for functions, for example factorial, and for types, for example tree structure)
 
 ## Haskell - the programming language
 
@@ -490,12 +509,16 @@ greet :: String -> String
 
 ## Task assignment
 
-*TODO*
+Create new project with `stack` and publish it on the GitHub. Try on your own developing the projects and basic `git` commands.
 
 ## Further reading
 
-*TODO*
-
+* [Why Functional Programming Matters](https://wiki.ccmi.fit.cvut.cz/_media/programming:why_functional_programming_matters.pdf)
+* [Why Haskell Matters](https://dzone.com/articles/why-haskell-matters)
+* [Learn You a Haskell for Great Good](http://learnyouahaskell.com)
+* [School of Haskell](https://www.schoolofhaskell.com/school/starting-with-haskell/introduction-to-haskell)
+* [Stack User Guide](https://docs.haskellstack.org/en/stable/GUIDE/)
+* [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
 
 [Cabal]: https://www.haskell.org/cabal/
 [GHC]: https://www.haskell.org/ghc/
