@@ -227,7 +227,19 @@ myFunc (a, b, c, d) = (if d then a + d else a - d, b)
 There are basic functions for tuples with two elements: `fst`, `snd`, and `swap`.
 
 ```
-
+Prelude> :type fst
+fst :: (a, b) -> a
+Prelude> fst (7, "Hello")
+7
+Prelude> :type snd
+snd :: (a, b) -> b
+Prelude> snd (7, "Hello")
+"Hello"
+Prelude> import Data.Tuple
+Prelude Data.Tuple> :t swap
+swap :: (a, b) -> (b, a)
+Prelude Data.Tuple> swap (7, "Hello")
+("Hello",7)
 ```
 
 Good to know is how it actually works and try to implement own tuples.

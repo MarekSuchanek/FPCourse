@@ -32,7 +32,25 @@ You can derive only built-in typeclasses:
 If you derive default implementation of instance for `Show` and `Read` the string representing the data is actually the same as you would write it in Haskell code:
 
 ```
--- TODO: show/read in GHCI
+Prelude> data Tree a = Leaf a | Node (Tree a) (Tree a) deriving (Show, Read)
+Prelude>
+Prelude> myTree = Node (Leaf 8) (Node (Leaf 70) (Leaf 15))
+Prelude> show myTree
+"Node (Leaf 8) (Node (Leaf 70) (Leaf 15))"
+Prelude> read "Node (Leaf 5) (Leaf 100)"
+*** Exception: Prelude.read: no parse
+Prelude> (read "Node (Leaf 5) (Leaf 100)") :: Tree Int
+Node (Leaf 5) (Leaf 100)
+
+Prelude> :info Show
+class Show a where
+  showsPrec :: Int -> a -> ShowS
+  show :: a -> String
+  showList :: [a] -> ShowS
+  {-# MINIMAL showsPrec | show #-}
+  	-- Defined in ‘GHC.Show’
+
+...
 ```
 
 You can of course make your own instance of those classes where would be representation different but why would you do that - you already like Haskell! When you make own `read` and `show`, you should ensure that after using `read` on string produced by `show` you will get the same data.
@@ -64,7 +82,26 @@ For comparison there are two basic typeclasses - `Eq` and its subclass `Ord`:
 You can again implement your own instances of those classes:
 
 ```haskell
+Prelude> :info Eq
+class Eq a where
+  (==) :: a -> a -> Bool
+  (/=) :: a -> a -> Bool
+  {-# MINIMAL (==) | (/=) #-}
+  	-- Defined in ‘GHC.Classes’
+...
 
+Prelude> :info Ord
+class Eq a => Ord a where
+  compare :: a -> a -> Ordering
+  (<) :: a -> a -> Bool
+  (<=) :: a -> a -> Bool
+  (>) :: a -> a -> Bool
+  (>=) :: a -> a -> Bool
+  max :: a -> a -> a
+  min :: a -> a -> a
+  {-# MINIMAL compare | (<=) #-}
+  	-- Defined in ‘GHC.Classes’
+...
 ```
 
 ## Task assignment
