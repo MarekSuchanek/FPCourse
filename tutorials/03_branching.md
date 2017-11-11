@@ -232,4 +232,6 @@ y = FPTM.myFunc1 25
 
 ## Task assignment
 
+Implement stack computer that realizes instructions such as: TV, TA, ST, RD, WR, AD, SB, MT, DI.
+
 ## Further reading
