@@ -6,6 +6,20 @@ Typeclass is class of types with definition of common functions for all instance
 
 ### Kinds
 
+```
+Prelude> :kind Integer
+Integer :: *
+Prelude> :kind Maybe
+Maybe :: * -> *
+Prelude> :kind Either
+Either :: * -> * -> *
+Prelude> :kind (Either Integer)
+(Either Integer) :: * -> *
+Prelude> :kind (Either Integer String)
+(Either Integer String) :: *
+
+```
+
 ### Polymorfism
 
 ### Type constraints
