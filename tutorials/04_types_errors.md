@@ -206,3 +206,10 @@ We won't use such exceptions and always will try to deal with errors some other 
 ## Task assignment
 
 ## Further reading
+
+* [Haskell - list comprehension](https://wiki.haskell.org/List_comprehension)
+* [Haskell - Lazy evaluation](https://wiki.haskell.org/Lazy_evaluation)
+* [Haskell String Types](http://www.alexeyshmalko.com/2015/haskell-string-types/)
+* [Haskell - Handling errors in Haskell](https://wiki.haskell.org/Handling_errors_in_Haskell)
+* [Haskell - error](https://wiki.haskell.org/Error)
+* [8 ways to report errors in Haskell](http://www.randomhacks.net/2007/03/10/haskell-8-ways-to-report-errors/)

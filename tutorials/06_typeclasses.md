@@ -6,6 +6,8 @@ Typeclass is class of types with definition of common functions for all instance
 
 ### Kinds
 
+In type theory, a kind is the type of a type constructor or, less commonly, the type of a higher-order type operator. A kind system is essentially a simply typed lambda calculus 'one level up,' endowed with a primitive type, denoted * and called 'type', which is the kind of any (monomorphic) data type. Simply you can observe this with GHCi and `:kind` command on various types. For example kind `* -> *` tells that you need to specify one type argument to create type with kind `*` so you can have values of it.
+
 ```
 Prelude> :kind Integer
 Integer :: *
@@ -22,9 +24,21 @@ Prelude> :kind (Either Integer String)
 
 ### Polymorfism
 
-### Type constraints
+https://en.wikibooks.org/wiki/Haskell/Polymorphism
 
 ### Own typeclass and instance
+
+There are many defined typeclasses and basic types which are instances of those classes. You can create your own on top of it if you need more.
+
+```haskell
+class CSVExportable a where
+    headings :: a -> [String]
+    toList :: a -> String
+    toCSV :: a -> String
+    headingsCSV :: a -> String
+```
+
+*TODO example*
 
 ## Basic typeclasses
 
@@ -121,3 +135,9 @@ class Eq a => Ord a where
 ## Task assignment
 
 ## Further reading
+
+* [Learn You a Haskell for Great Good](http://learnyouahaskell.com) (chapters 3 and 8)
+* [Typeclassopedia](https://wiki.haskell.org/Typeclassopedia)
+* [Haskell - OOP vs type classes](https://wiki.haskell.org/OOP_vs_type_classes)
+* [WikiBooks - Haskell: Classes and types](https://en.wikibooks.org/wiki/Haskell/Classes_and_types)
+

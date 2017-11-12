@@ -183,3 +183,8 @@ https://docs.python.org/3/library/typing.html
 ## Task assignment
 
 ## Further reading
+
+* [Haskell - Currying](https://wiki.haskell.org/Currying)
+* [Haskell - Higher order function](https://wiki.haskell.org/Higher_order_function)
+* [Haskell - Fold](https://wiki.haskell.org/Fold)
+* [Learn You a Haskell for Great Good](http://learnyouahaskell.com) (chapter 6)

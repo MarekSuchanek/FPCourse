@@ -235,3 +235,5 @@ y = FPTM.myFunc1 25
 Implement stack computer that realizes instructions such as: TV, TA, ST, RD, WR, AD, SB, MT, DI.
 
 ## Further reading
+
+* [Learn You a Haskell for Great Good](http://learnyouahaskell.com) (chapters 4, 7)
