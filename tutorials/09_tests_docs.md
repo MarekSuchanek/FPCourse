@@ -6,9 +6,37 @@ Testing is very important for keeping code on the straight-and-narrow path. The 
 
 ### HUnit
 
+[HUnit](https://hackage.haskell.org/package/HUnit) is a unit testing framework for Haskell, inspired by the JUnit tool for Java. For people familiar with unit testing this framework is very simple to use. First you define several test cases which you put in test list (instead of test class as in Java). Single test case is composed optionally of some data preparation and asserts. Result of running tests are four numbers - cases, tried, errors and failures.
+
+```haskell
+
+```
+
 ### QuickCheck
 
-### HSpecs
+Different approach of testing is provided by [QuickCheck](https://hackage.haskell.org/package/QuickCheck). It is a library for random testing of program properties. You can specify some "laws" in your application and this library will check with given number of randomly (but smartly) generated instances if there is not some counterexample violating the laws. Such laws or specifications are expressed in Haskell, using combinators defined in the QuickCheck library. QuickCheck provides combinators to define properties, observe the distribution of test data, and define test data generators. All from simple example to complex tutorials of such definitions is explained in the [manual](http://www.cse.chalmers.se/~rjmh/QuickCheck/manual.html).
+
+With QuickCheck you can for example check if you instance of
+`Monoid` is compliant with its laws.
+
+```haskell
+
+```
+
+### Hspec
+
+[Hspec](https://hackage.haskell.org/package/hspec) is a testing framework for Haskell. It is inspired by the Ruby library RSpec. Some of Hspec's distinctive features are:
+
+* a friendly DSL for defining tests,
+* integration with QuickCheck, SmallCheck, and HUnit,
+* parallel test execution,
+* automatic discovery of test files.
+
+Tests written in Hspec are very readable, intuitive and powerful. It allows integration with HUnit as well as with QuickCheck so it is sort of ultimate testing framework in Haskell.
+
+```haskell
+
+```
 
 ## Haddock (documentation)
 
@@ -70,7 +98,40 @@ Your project should be:
 
 Another advantage of publishing is that your project can get attention and community can help you improve it - they will create issues, forks and pull requests!
 
+## Using CI (Travis CI)
+
+When you are developing the project and sharing it with community, you want to show that it is working well and also check if contributions to your code are not breaking the functionality. For that you can use CI tools (continuous integration) which allows you to run tests (or other scripts) automatically. There are many CI tools these days: Travis CI, Circle CI, Appveyor, Semaphore, GitLab CI, etc.
+
+All (almost) CIs need some specification what they should do with your project. If you are using GitHub, then Travis CI is one of good choices for you. Just create `.travis.yml` in your repository and register project in Travis CI.
+
+```yaml
+# https://docs.haskellstack.org/en/stable/travis_ci/
+sudo: false
+# Not Haskell with cabal but with stack tool
+language: c
+cache:
+  directories:
+    - ~/.stack
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+before_install:
+  - mkdir -p ~/.local/bin
+  - export PATH=$HOME/.local/bin:$PATH
+  - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+install:
+  - stack --no-terminal --install-ghc test --only-dependencies
+script:
+  - stack --no-terminal test --haddock --no-haddock-deps
+```
+
+For Haskell you can use `.travis.yml` above or read documentation.
+
 ## Task assignment
+
+* Write tests and documentation for given project.
+* Publish on GitHub with use of Travis CI for testing.
 
 ## Further reading
 
