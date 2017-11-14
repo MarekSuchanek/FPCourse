@@ -8,6 +8,8 @@
 
 ## Parser
 
+## Arrow (and lifting)
+
 ## Lens (and Template Haskell intro)
 
 ## Task assignment
