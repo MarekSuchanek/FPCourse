@@ -78,10 +78,82 @@ Just as with Monoid, you can take a look at the documentation of [Data.Functor](
 
 ## Applicative
 
+Next important typeclass is [Control.Applicate](https://hackage.haskell.org/package/base/docs/Control-Applicative.html). Notice that it is not "Data" anymore, but "Control" instead! It is intermediate structure between a `Functor` and a `Monad`. It is simpler than `Monad`, not so powerful, but sufficient in many use cases, and also easier to understand.
+
+```haskell
+class Functor f => Applicative f where
+  pure  :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+```
+
+Function `pure` only lifts something into applicative structure `f`. The more interesting part is the "tie-fighter" operator `<*>` which applies lifted function over applicative. You can find out in the documentation following similar functions and partial functions as in [Data.Functor](https://hackage.haskell.org/package/base/docs/Data-Functor.html):
+
+```haskell
+(<*) :: f a -> f b -> f a
+(*>) :: f a -> f b -> f b
+
+liftA  :: (a -> b) -> f a -> f b
+liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+liftA3 :: (a -> b -> c -> d) -> f a -> f b -> f c -> f d
+```
+
+There are again some laws:
+
+```haskell
+-- identity
+pure id <*> v == v
+-- composition
+pure (.) <*> u <*> v <*> w == u <*> (v <*> w)
+-- homomorphism
+pure f <*> pure x = pure (f x)
+-- interchange
+u <*> pure y = pure ($ y) <*> u
+```
+
+
+```
+-- TODO play with applicative and operators
+```
+
 ## Monad
 
-## IO Monad
+The most famous and scary typeclass for Haskell students is [Control.Monad](https://hackage.haskell.org/package/base/docs/Control-Monad.html). It defines the basic operations over a monad, a concept from a branch of mathematics known as category theory. From the perspective of a Haskell programmer, however, it is best to think of a monad as an abstract datatype of actions. Haskell's do expressions provide a convenient syntax for writing monadic expressions.
+
+```haskell
+class Applicative m => Monad m where
+  (>>=)  :: m a -> (a -> m b) -> m b
+  (>>)   :: m a -> m b -> m b
+  return :: a -> m a
+```
+
+Function `return` work just as `pure` in `Functor`. The `>>` is sequencing operator and `>>=` is bind. Also there are functions `liftM` and laws:
+
+```haskell
+-- identity
+return a >>= k == k a
+m >>= return   ==  m
+-- associativity
+(m >>= f) >>= g = m >>= (\x -> f x >>= g)
+```
+
+```
+-- TODO play with applicative and operators
+```
+
+### Do syntax
+
+```
+-- TODO play with do
+```
+
+### IO Monad
+
+```
+-- TODO play with IO
+```
 
 ## Task assignment
 
 ## Further reading
+
+* [Functors, Applicatives, And Monads In Pictures](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
