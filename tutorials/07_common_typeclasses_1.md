@@ -142,14 +142,44 @@ m >>= return   ==  m
 
 ### Do syntax
 
+Using `do` blocks as an alternative monad syntax was first introduced way back in the Simple input and output chapter. There, we used do to sequence input/output operations, but we hadn't introduced monads yet. Now, we can see that IO is yet another monad.
+
+Following are equivalent:
+
+```haskell
+main =
+    putStr "Hello" >>
+    putStr " " >>
+    putStr "world!" >>
+    putStr "\n"
 ```
--- TODO play with do
+
+```haskell
+main = do
+   { putStr "Hello"
+   ; putStr " "
+   ; putStr "world!"
+   ; putStr "\n" }
+```
+
+```haskell
+main = do
+    putStr "Hello"
+    putStr " "
+    putStr "world!"
+    putStr "\n"
 ```
 
 ### IO Monad
 
-```
--- TODO play with IO
+Haskell separates pure functions from computations where side effects must be considered by encoding those side effects as values of a particular type. Specifically, a value of type (IO a) is an action, which if executed would produce a value of type a.
+
+Some examples:
+
+```haskell
+getLine :: IO String
+putStrLn :: String -> IO () -- note that the result value is an empty tuple.
+randomRIO :: (Random a) => (a,a) -> IO a
 ```
 
 ## Task assignment
@@ -157,3 +187,5 @@ m >>= return   ==  m
 ## Further reading
 
 * [Functors, Applicatives, And Monads In Pictures](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html)
+* [Monad](https://wiki.haskell.org/Monad)
+* [IO Monad](https://wiki.haskell.org/Introduction_to_IO)
