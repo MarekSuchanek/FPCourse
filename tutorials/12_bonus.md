@@ -11,3 +11,5 @@
 ### Agda
 
 ### Idris
+
+## Further reading
