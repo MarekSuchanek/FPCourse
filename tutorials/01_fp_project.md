@@ -6,9 +6,13 @@ Functional programming is a programming paradigm (i.e. a style of building the s
 
 ### Lambda calculus
 
-Lambda calculus is good to understand (at least basics) when you want to start with FP. Actually it is not so complicated and quite straightforward.
+Lambda calculus is good to understand (at least basics) when you want to start with FP. You should get familiar mainly with the principle of reduction of some more or less complex expression to the simplest and irreducible form. That will make it a lot easier to understand basics of functional programming and Haskell if you are used to object-oriented world.
 
 * [Lambda calculus (wikipedia)](https://en.wikipedia.org/wiki/Lambda_calculus)
+* [Lambda calculus (Stanford)](https://plato.stanford.edu/entries/lambda-calculus/)
+* [The Lambda Calculus for Absolute Dummies (like myself)](http://palmstroem.blogspot.cz/2012/05/lambda-calculus-for-absolute-dummies.html)
+
+For FIT CTU students, there is subject [BI-PPA](https://edux.fit.cvut.cz/courses/BI-PPA) which also covers basics of lambda calculus.
 
 ### Function as first class-object
 
@@ -20,6 +24,8 @@ Programming language is said to have [first-class functions](https://en.wikipedi
 * closures (and non-local variables),
 * assigning functions to variables,
 * and equality of functions.
+
+Some might not be absolutely clear to you at the moment, some are familiar from some math courses, but we will see all of them in practice during the course.
 
 ### FP concepts and dictionary
 
@@ -37,43 +43,66 @@ Programming language is said to have [first-class functions](https://en.wikipedi
 [haskell_education]: https://wiki.haskell.org/Haskell_in_education
 [haskell_industry]: https://wiki.haskell.org/Haskell_in_industry
 
-## Tools we use
+## The tools we use
 
-1. [GHC] = the compiler. There are some more (Hugs, NHC, JHC, UHC, etc.), but this is classified as most widely used.
-2. [Cabal] = system for building and packaging.
-3. [Stack] = managing Haskell projects, works with [Cabal] for you.
+* [GHC] = the compiler. There are some more (Hugs, NHC, JHC, UHC, etc.), but this is classified as most widely used.
+* [Cabal] = system for building and packaging.
+* [Stack] = managing Haskell projects, works with [Cabal] for you.
 
-:point_right: Please now install these (follow instructions at official sites or your OS/distribution).
+:point_right: Please these (or check if installed already) - you can follow instruction on official websites one by one or (better) install [Haskell Platform], which includes all of those and also most common packages.
+
+### Editors and IDEs
+
+There are several editors you may use for writing Haskell programs, most probably there is some extension for you favorite editor. We recommend one of those:
+
+* [Vim with plugins](https://wiki.haskell.org/Vim)
+* [IntelliJ IDEA with HaskForce](http://haskforce.com)
+* [Atom with plugins](https://atom-haskell.github.io/overview/)
+
+Most probably you will need following stuff:
+
+* [ghc-mod] = connector to [GHC] API for various stuff
+* [hlint] = source code suggestion
+* [hindent] = indenter, pretty print
+* [stylish-haskell] = code prettifier ("good style")
+
+Install those with [Cabal] (by default it will install just for you to your profile, ensure that you have `~/.cabal/bin` in your `PATH`. The installation might take a while - it has lot of dependencies and needs to build them from Haskell source code. If you want to install something with [Cabal] to all users, use `--global` flag.
+
+```
+$ cabal update
+$ cabal install hlint stylish-haskell hindent ghc-mod
+```
 
 ### Sites for searing
 
-1. [Hoogle] = "Google" for Haskell world
-2. [Hayoo!] = "Yahoo" for Haskell world
-3. [Hackage] = package archive, here are packages which can you install and use standalone or as modules for your projects (similar to PyPI for Python, RubyGems for Ruby, etc.)
-4. [Stackage] = package archive, alternative to [Hackage], only stable packages
+* [Hoogle] = "Google" for Haskell world
+* [Hayoo!] = "Yahoo" for Haskell world
+* [Hackage] = package archive, here are packages which can you install and use standalone or as modules for your projects (similar to PyPI for Python, RubyGems for Ruby, etc.)
+* [Stackage] = package archive, alternative to [Hackage], only stable packages
 
 :point_right: Take a look at them...
 
-### Haskell and JavaScript
+### Haskell, JavaScript and new languages
 
 If you like to build (frontend/backend) JavaScript applications you can do that nicely with Haskell. There are multiple options, most known are:
 
-1. [GHCJS]
-2. [Haste]
-3. [PureScript]
+* [GHCJS]
+* [Haste]
+* [PureScript]
+* [Elm]
 
-This is nice example for practical usage of Haskell for web projects! It is so much easier (and safer) to write JavaScript in Haskell than just plain JavaScript...
+This is nice example for practical usage of Haskell for web projects! It is so much easier (and safer) to write JavaScript in Haskell than just plain JavaScript. Some of those are not just Haskell dialects or libraries but new languages deeply inspired by Haskell. For more information, read about [The JavaScript Problem](https://wiki.haskell.org/The_JavaScript_Problem). We will slightly look at this at the end of this course.
 
 ## Try to be interactive
 
-Now you should have [GHC] installed, you can test it out with
+Now you should have [GHC] installed (and others as well, but we won't need editor for this time), you can test it out with following command.
 
 ```
 % ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.0.2
 ```
 
-First, let's try the interactive environment and evaluate some basic expression.
+First, let's try the interactive environment and evaluate some basic expression in Haskell for the first time.
 
 ```
 % ghci
@@ -84,7 +113,7 @@ Prelude> putStrLn "Hello, world!"
 Hello, world!
 ```
 
-In prompt you see (by default) imported modules, in this case just `Prelude` - the most basic one. Then you can write and evaluate Haskell expression. In the example above we wrote a string and result was the string (no surprise), we then used a function `putStrLn` to print a string to output (notice that there are no quotes around).
+In prompt you see (by default) imported modules, in this case just `Prelude` - the most basic one (try to lookup Prelude module in [Hoogle] and check the content of it). Then you can write and evaluate Haskell expression. In the example above we wrote a string using double quotes and result was the string (no surprise, nothing to do more with that). We then used a function `putStrLn` to print a string to output (notice that there are no quotes around).
 
 ### Basic math & logics
 
@@ -103,7 +132,7 @@ Prelude> 2 / 3
 0.6666666666666666
 ```
 
-Integer division and modulo is done by functions. You can call functions in prefix notation (no brackes and no commas needed):
+Integer division and modulo is done by functions. You can call functions in prefix notation (no brackes and no commas):
 
 ```
 Prelude> div 7 2
@@ -112,7 +141,7 @@ Prelude> mod 7 2
 1
 ```
 
-Same goes for logics and comparison:
+Same goes for logic and comparison (you might be used to `!=` or `<>` for not-equal, but `!` and `<>` are used for something else in Haskell we will find out during the course):
 
 ```
 Prelude> 5 > 7
@@ -133,7 +162,7 @@ True
 
 ### Types
 
-Very useful thing in GHCi is that you can check the type of expression.
+Very useful thing in GHCi is that you can check the type of an expression.
 
 ```
 Prelude> :type 2 ^ 8
@@ -142,18 +171,37 @@ Prelude> :type 2 / 3
 2 / 3 :: Fractional a => a
 ```
 
-The double semicolon `::` means "is of type" and you can use it for explicitly stating type of your expressions.
+The double semicolon `::` means "is of type" and you can use it for explicitly stating type of your expressions. But this is not type casting as you might know, you must conform the restriction, in this case `Fractional a` (typeclasses will be covered deeply in next lessons).
 
 ```
 Prelude> (2 / 3) :: Double
 0.6666666666666666
 Prelude> (2 / 3) :: Float
 0.6666667
+Prelude> (2 / 3) :: Int
+
+<interactive>:2:2: error:
+    • No instance for (Fractional Int) arising from a use of ‘/’
+    • In the expression: (2 / 3) :: Int
+      In an equation for ‘it’: it = (2 / 3) :: Int
 ```
 
-More interesting is to do such thing with functions, because we are in functional language! Function `abs` (absolute value) takes a number and returns a number. That means it doesn't work for strings...
+You can see that error message exactly tells us what is wrong! `Int` is not instance of `Fractional` which we need when using `/` in the expression `(2 / 3) :: Int`. This is kind of obvious but when you will have bigger project with source files, you will find GHC error messages very useful.
 
-The type signature is very math-like... Type of `Num` is for example `Integer` and you know functions from math which have type `Integer -> Integer` (domain and co-domain).
+If you need to change type, find a suitable function. Some of them are in `Prelude`: `toInteger`, `fromInteger`, `toRational`, etc. Another quite important is `show` for showing anything as `String`. How these work will be covered more later on as we get to typeclasses and polymorphism!
+
+```
+Prelude> :t toInteger (7::Int)
+toInteger (7::Int) :: Integer
+Prelude> show (2/3)
+"0.6666666666666666"
+Prelude> toRational (2/16)
+1 % 8
+```
+
+Similarly you can do such thing with functions, because we are in functional language! Function `abs` (absolute value) takes a number and returns a number. That means it doesn't work for strings...
+
+The type signature is very math-like... Instance (type) of `Num` is for example `Integer` and you know functions from math which have type `Integer -> Integer` (domain and co-domain).
 
 ```
 Prelude> :type abs
@@ -170,7 +218,7 @@ Prelude> abs "z"
       In an equation for ‘it’: it = abs "z"
 ```
 
-The operators are functions as well - this is functional language. All you need to do is put it in brackets. Plus takes two numbers and returns a number. You can then use `(+)` as a function in prefix notation and not infix.
+The operators are functions as well - Haskell is functional language. All you need to do is put it in brackets. Plus takes two numbers and returns a number. You can then use `(+)` as a function in prefix notation and not infix.
 
 ```
 Prelude> :type (+)
@@ -179,7 +227,7 @@ Prelude> (+) 5 4
 9
 ```
 
-On the other hand you might want to use some functions in infix and you need `` ` `` for that.
+On the other hand you might want to use some functions in infix to improve readability and you need `` ` `` for that.
 
 ```
 Prelude> :t div
@@ -217,7 +265,7 @@ Prelude> myFunc 5 3
 
 OK, but if you close GHCi (CTRL+D/Z or `:quit`/`:q`) then you lost your code. For making it persistent you need a source file. You can name with as you like but in Haskell we use `.hs` file extension (or `.lhs` if code is part of document - [literate Haskell]).
 
-Let's create a simple source file `01_test_haskell.hs` and create two functions there. We can also use comments (
+Let's create a simple source file `01_test_haskell.hs` and create two functions there. We can also use comments (`{- -}` for multiline and `--` for singleline).
 
 ```haskell
 {-
@@ -398,7 +446,7 @@ Writing configuration to file: HelloWorld/stack.yaml
 All done.
 ```
 
-Now whole project has been created for you. You should edit `HelloWorld.cabal` file which specifies the project (author, email, url, etc.). Then use the same code from previous example to `app/Main.hs` and `src/Lib.hs`.
+Now whole project has been created for you. You should edit `package.yaml` file which specifies the project (author, email, url, etc.) and thanks to [hpack] is nicer form which is then used to generate `HelloWorld.cabal`. Then use the same code from previous example to `app/Main.hs` and `src/Lib.hs`.
 
 ```haskell
 -- src/Lib.hs
@@ -477,7 +525,7 @@ Installing executable(s) in
 Registering HelloWorld-0.1.0.0...
 ```
 
-Everything ended up OK and you are finally able to run the application (`HelloWorld-exe` is defined in `HelloWorld.cabal` and you may change it):
+Everything ended up OK and you are finally able to run the application (`HelloWorld-exe` is defined in `package.yaml`, thus also `HelloWorld.cabal`, and you may change it):
 
 ```
 % stack exec HelloWorld-exe
@@ -486,17 +534,17 @@ Marek
 Hello, Marek!
 ```
 
-For debugging you can run `ghci` with preloaded project:
+For debugging you can run `ghci` with project preloaded:
 
 ```
 % stack ghci
 The following GHC options are incompatible with GHCi and have not been passed to it: -threaded
 Configuring GHCi with the following packages: HelloWorld
-Using main module: 1. Package `HelloWorld' component exe:HelloWorld-exe with main-is file: /home/user/Projects/CTU/FPCourse/files/01_hw_stack/HelloWorld/app/Main.hs
+Using main module: 1. Package `HelloWorld' component exe:HelloWorld-exe with main-is file: /home/.../HelloWorld/app/Main.hs
 GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
-[1 of 1] Compiling Lib              ( /home/user/Projects/CTU/FPCourse/files/01_hw_stack/HelloWorld/src/Lib.hs, interpreted )
+[1 of 1] Compiling Lib              ( /home/.../HelloWorld/src/Lib.hs, interpreted )
 Ok, modules loaded: Lib.
-[2 of 2] Compiling Main             ( /home/user/Projects/CTU/FPCourse/files/01_hw_stack/HelloWorld/app/Main.hs, interpreted )
+[2 of 2] Compiling Main             ( /home/.../HelloWorld/app/Main.hs, interpreted )
 Ok, modules loaded: Lib, Main.
 Loaded GHCi configuration from /tmp/ghci18580/ghci-script
 *Main Lib> :browse
@@ -505,11 +553,62 @@ main :: IO ()
 greet :: String -> String
 ```
 
-[Stack] is really powerful tool, you can find more by reading documentation or just with `stack --help`.
+[Stack] is really powerful tool, you can find more by reading documentation or just with `stack --help` or read [docs](https://docs.haskellstack.org/en/stable/README/).
+
+### Stack config files and dependencies
+
+You might have noticed that [Stack] uses `package.yaml` to generate `.cabal` and there is some `stack.yaml`. It also somehow takes care of the needed dependencies. Let's say you need to you collection of type Set. Of course you could implement it by your own, but reinventing the wheel is unnecessary! Use `Data.Set` which is already here (we will cover details about this and other data structures in Haskell in the future).
+
+If you lookup `Data.Set` ([Hoogle], [Hayoo!] or [Hackage]), you will find out that it is in package `containers` licensed under BSD with maintainer email libraries@haskell.org (see [here](http://hackage.haskell.org/package/containers-0.5.11.0/docs/Data-Set.html)). If you now try to do this in your `Lib.hs`:
+
+```haskell
+import Data.Set
+
+namesSet = insert "Robert" (insert "Marek" empty)
+```
+
+After trying to build with `stack build` you should get this error stating that it could not find module `Data.Set`:
+
+```
+/home/.../HelloWorld/src/Lib.hs:5:1: error:
+    Could not find module ‘Data.Set’
+    Perhaps you meant Data.Int (from base-4.10.1.0)
+    Use -v to see a list of the files searched for.
+  |
+5 | import Data.Set
+  | ^^^^^^^^^^^^^^^
+```
+
+All you need to do is include package `containers` (you could also specify the required version) in the dependencies of `package.yaml` file. After `stack build` the package will be downloaded and built, if something else is needed (like adding `extra-deps` to `stack.yaml`, you will be informed in detail - it happens when it is not common package).
+
+```yaml
+# ...
+dependencies:
+- base >= 4.7 && < 5
+- containers
+
+# ...
+```
+
+Then after the build you can do for example this with `stack ghci`:
+
+```
+*Main Lib> namesSet
+fromList ["Marek","Robert"]
+*Main Lib> import Data.Set
+*Main Lib Data.Set> member "Marek" namesSet
+True
+*Main Lib Data.Set> member "Martin" namesSet
+False
+```
+
+Further, [Stack] also provides [dependency visualization](https://docs.haskellstack.org/en/stable/dependency_visualization/) via well-known tool Dot (GraphViz) and more detailed options...
 
 ## Task assignment
 
-Create new project with `stack` and publish it on the GitHub. Try on your own developing the projects and basic `git` commands.
+To test out the workflow check the dummy homework [MI-AFP/hw00](https://github.com/MI-AFP/hw00) where you will learn how you should get, complete, check, and submit homework (especially useful if you are not familiar with [GitHub] and [Travis CI]). By working on such homework, you might also learn new things which you encounter in tests and skeletons.
+
+For your first assignment, visit [MI-AFP/hw01](https://github.com/MI-AFP/hw01). The task consists of writing simple expression and looking up information with [Hoogle], [Hayoo!] and/or GHCi.
 
 ## Further reading
 
@@ -521,15 +620,24 @@ Create new project with `stack` and publish it on the GitHub. Try on your own de
 * [GHC User Guide](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/)
 
 [Cabal]: https://www.haskell.org/cabal/
+[Elm]: http://elm-lang.org
 [GHC]: https://www.haskell.org/ghc/
+[ghc-mod]: https://github.com/DanielG/ghc-mod
 [GHCJS]: https://github.com/ghcjs/ghcjs
+[GitHub]: https://github.com
 [Hackage]: https://hackage.haskell.org
 [Haskell]: https://www.haskell.org
 [Haskell 2010]: https://www.haskell.org/onlinereport/haskell2010/
+[Haskell Platform]: https://www.haskell.org/platform/
 [Haste]: https://haste-lang.org
 [Hayoo!]: https://hayoo.fh-wedel.de
+[hindent]: https://github.com/commercialhaskell/hindent
+[hlint]: https://hackage.haskell.org/package/hlint
 [Hoogle]: https://www.haskell.org/hoogle/
+[hpack]: https://github.com/sol/hpack
 [literate Haskell]: https://wiki.haskell.org/Literate_programming
 [PureScript]: http://www.purescript.org
 [Stack]: https://docs.haskellstack.org
 [Stackage]: https://www.stackage.org
+[stylish-haskell]: https://github.com/jaspervdj/stylish-haskell
+[Travis CI]: https://travis-ci.org
