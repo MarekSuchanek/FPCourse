@@ -205,6 +205,8 @@ We won't use such exceptions and always will try to deal with errors some other 
 
 ## Task assignment
 
+Implement interactive CLI calculator (supporting basic operations, sin/cos, sqrt, pow, log) with raising errors when NaN would be the result.
+
 ## Further reading
 
 * [Haskell - list comprehension](https://wiki.haskell.org/List_comprehension)
